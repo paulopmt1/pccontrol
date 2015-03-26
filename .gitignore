@@ -2,3 +2,5 @@
 /java/build/
 /java/dist/
 /java/bin/
+
+/php/nbproject/private

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Sistema de controle de sites para amore</title>
+        <meta charset="UTF-8">
+        <script src="js/jquery-2.0.js"></script>
+        <script type="text/javascript" src="js/TimeCircles.js"></script> 
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <link rel="stylesheet" href="css/TimeCircles.css" />
+
+        <script type="text/javascript">
+            function initTimer(){
+                $.get('../getDestinationDate.php', function(data){
+                    $("#timer").attr('data-date', data.date);
+                    
+                    $(".demo").TimeCircles({
+                        time: {//  a group of options that allows you to control the options of each time unit independently.
+                            Days: {
+                                show: false
+                            },
+                            Hours: {
+                                show: true,
+                                text: "Horas",
+                                color: "#9CF"
+                            },
+                            Minutes: {
+                                show: true,
+                                text: "Minutos",
+                                color: "#BFB"
+                            },
+                            Seconds: {
+                                show: false
+                            }
+                        }
+                    });
+                });
+            }
+            
+            $(document).ready(function(){
+                $(".btn-success").click(function(){
+                    $.post('../addDates.php', {
+                        type: 'START'
+                    }, function(data){
+                        alert('Acesso liberado!')
+                    });
+                });
+
+                $(".btn-danger").click(function(){
+                    $.post('../addDates.php', {
+                        type: 'END'
+                    }, function(data){
+                        alert('Acesso bloqueado!')
+                    });
+                });
+            });
+            
+            setTimeout(initTimer, 500);
+            setInterval(initTimer, 60000)
+
+        </script>
+
+        <style type="text/css">
+            #buttons{
+                margin: auto;
+                width: 300px;
+                margin-top: 40px;
+            }
+            
+            #timer{
+                width: 40%;
+                margin: auto;
+            }
+
+        </style>
+    </head>
+    <body>
+
+        <div id="timer" class="demo" data-date="2015-03-15 17:00:00"></div>
+
+        
+        <div id="buttons">
+            <p>Amore, abaixo você ativa e desativa o acesso aos sites malvados :)</p>
+            
+            <button type="button" class="btn btn-success">Iniciar acesso</button>
+            <button type="button" class="btn btn-danger">Parar acesso</button>
+        </div>
+
+    </body>
+</html>
